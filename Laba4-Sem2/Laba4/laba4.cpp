@@ -43,9 +43,9 @@ int main() {
 	//сравнение элементов списков
 	list* q = NULL;
 	int v;
-	while (list2->next != NULL) {
+	while (list2 != NULL) {
 		v = 0; 
-		for (q = list1; q->next != NULL; q = q->next) {
+		for (q = list1; q != NULL; q = q->next) {
 			if (q->val == list2->val) { v = 1; break; }
 		}
 		if (v == 0) {

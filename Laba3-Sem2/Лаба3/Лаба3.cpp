@@ -47,15 +47,17 @@ void addlinem(int* &q) {
 
 int main()
 {
-    const int N = 50;
+	setlocale(0, "ru");
+	const int N = 50;
 	int d = 1, l = 1, k = 0, v = 1, A[N];
 	int** p = NULL;
 	int* q = NULL;
+	cout << "Входной массив\n";
 	for (int i = 0; i < N; i++) {
 		A[i] = rand() % 201 - 100;
 		cout << A[i] << " ";
 	}
-	cout << endl << endl;
+	cout << "\nВыходной массив\n";
 	q = new int[1];
 	q[0] = 0;
 
