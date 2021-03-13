@@ -8,17 +8,17 @@ struct btree {
     struct btree* right;
 };
 
-void tree_print(btree* tr1) {
+void tree_print(btree *tr1) {
     if (tr1 != NULL) {
         tree_print(tr1->left);
         for (int i = 0; i < tr1->n; i++) {
             cout << tr1->A[i] << " ";
-        }
+        } 
         tree_print(tr1->right);
     }
 }
 
-void add(int b, btree*& tree) {
+void add(int b, btree* &tree) {
     if (tree == NULL) { //если нет узла
         tree = new btree();
         tree->A[0] = b;
@@ -27,7 +27,7 @@ void add(int b, btree*& tree) {
     else if (tree->n < 4) { //если узел не заполнен
         tree->A[tree->n] = b;
         tree->n++;
-        for (int i = 0; i < tree->n - 1; i++) //сортировка
+        for (int i = 0; i < tree->n-1; i++) //сортировка
             for (int j = 0; j < tree->n - i - 1; j++)
                 if (tree->A[j] > tree->A[j + 1]) {
                     int c = tree->A[j]; tree->A[j] = tree->A[j + 1]; tree->A[j + 1] = c;
@@ -59,7 +59,7 @@ void add(int b, btree*& tree) {
 
 int main()
 {
-    btree* tree = NULL;
+    btree *tree=NULL;
     int n, x;
     cin >> n;
     for (int i = 0; i < n; i++) {
