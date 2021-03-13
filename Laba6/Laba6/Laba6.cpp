@@ -8,6 +8,7 @@ struct btree {
     struct btree* right;
 };
 
+
 struct queue {
     btree* tree;
     int lvl;
@@ -37,10 +38,11 @@ void tree_print(queue *pb, queue *pe) {
         pb = q->next;
         delete q;
         tree_print(pb, pe);
+
     }
 }
 
-void add(int b, btree* &tree) {
+void add(int b, btree*& tree) {
     if (tree == NULL) { //если нет узла
         tree = new btree();
         tree->A[0] = b;
@@ -49,7 +51,7 @@ void add(int b, btree* &tree) {
     else if (tree->n < 4) { //если узел не заполнен
         tree->A[tree->n] = b;
         tree->n++;
-        for (int i = 0; i < tree->n-1; i++) //сортировка
+        for (int i = 0; i < tree->n - 1; i++) //сортировка
             for (int j = 0; j < tree->n - i - 1; j++)
                 if (tree->A[j] > tree->A[j + 1]) {
                     int c = tree->A[j]; tree->A[j] = tree->A[j + 1]; tree->A[j + 1] = c;
@@ -81,8 +83,10 @@ void add(int b, btree* &tree) {
 
 int main()
 {
+
     queue* pb, * pe;
     btree *tree=NULL;
+
     int n, x;
     cin >> n;
     for (int i = 0; i < n; i++) {
