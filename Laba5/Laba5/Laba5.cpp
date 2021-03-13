@@ -10,39 +10,25 @@ long long sum_num(long long x) {
 	return sum;
 }
 
-long long recursia(long long a, long long &min) {
-	long long v = a;
-	if (a < 100000000000000000) {
+void recursia(long long a, long long &min) {
+	if (a < 100000000000000000) { //ограничение поиска
 		a *= 10;
 		a += 3;
-		if (a % 21 == 0 && sum_num(a) % 21 == 0) {
-			return a;
-		}
-		v = recursia(a, min);
-		if (v != -1) a = v;
-		if (a % 21 == 0 && sum_num(a) % 21 == 0) {
+		if (a % 21 == 0 && sum_num(a) % 21 == 0) { //проверка условий
 			if (min == 0) min = a;
 			else if (a < min) min = a;
 		}
+		recursia(a, min); //вызов функции с добавленной тройкой в конец
 		a /= 10;
 		a *= 10;
 		a += 7;
-		if (a % 21 == 0 && sum_num(a) % 21 == 0) {
-			return a;
-		}
-		v = recursia(a, min);
-		if (v != -1) a = v;
-		if (a % 21 == 0 && sum_num(a) % 21 == 0) {
+		if (a % 21 == 0 && sum_num(a) % 21 == 0) { //проверка условий
 			if (min == 0) min = a;
 			else if (a < min) min = a;
 		}
-		return -1;
-	}
-	else {
-		return -1;
+		recursia(a, min); //вызов функции с добавленной семеркой в конец
 	}
 }
-
 
 int main() {
 	long long answer = 0;
