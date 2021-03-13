@@ -40,7 +40,15 @@ struct btree* add(int x, btree* tree) {
         else if (tree->left != NULL) {
             tree->left = add(x, tree->left);
         }
-        else tree->right = add(x, tree->right);
+        else if (tree->right != NULL) {
+            tree->right = add(x, tree->right);
+        }
+        else {//если никуда не вошло
+            tree = new btree();
+            tree->A[0] = x;
+            tree->left = NULL;
+            tree->right = NULL;
+        }
     } 
     return(tree);
 }
