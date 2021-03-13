@@ -10,7 +10,7 @@ long long sum_num(long long x) {
 	return sum;
 }
 
-long long recursia(long long a) {
+long long recursia(long long a, long long &min) {
 	long long v = a;
 	if (a < 100000000000000000) {
 		a *= 10;
@@ -18,10 +18,11 @@ long long recursia(long long a) {
 		if (a % 21 == 0 && sum_num(a) % 21 == 0) {
 			return a;
 		}
-		v = recursia(a);
+		v = recursia(a, min);
 		if (v != -1) a = v;
 		if (a % 21 == 0 && sum_num(a) % 21 == 0) {
-			return a;
+			if (min == 0) min = a;
+			else if (a < min) min = a;
 		}
 		a /= 10;
 		a *= 10;
@@ -29,10 +30,11 @@ long long recursia(long long a) {
 		if (a % 21 == 0 && sum_num(a) % 21 == 0) {
 			return a;
 		}
-		v = recursia(a);
+		v = recursia(a, min);
 		if (v != -1) a = v;
 		if (a % 21 == 0 && sum_num(a) % 21 == 0) {
-			return a;
+			if (min == 0) min = a;
+			else if (a < min) min = a;
 		}
 		return -1;
 	}
@@ -43,6 +45,8 @@ long long recursia(long long a) {
 
 
 int main() {
-	cout << recursia(0);
+	long long answer = 0;
+	recursia(0, answer);
+	cout << answer;
 	return 0;
 }
