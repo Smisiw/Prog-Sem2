@@ -12,7 +12,7 @@ struct btree* add(int x, btree* tree) {
     if (tree != NULL) {
         if (tree->n < 4) {
             cin >> x;
-            int k = 0;//кол-во элементов, меньших введенного числа
+            int k = 0;//кол-во элементов, больших введенного числа
             for (int i = 0; i < tree->n && k < 4; i++) {
                 if (x >= tree->A[i]) {
                     k++;
