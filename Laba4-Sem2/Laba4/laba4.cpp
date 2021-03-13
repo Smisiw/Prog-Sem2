@@ -7,6 +7,9 @@ struct list {
 	list* next;
 };
 
+
+//ВИДИШЬ ЧЕ-НИБУДЬ?
+
 //вывод элементов списка
 void show(list* p) {
 	for (; p != NULL; p = p->next) cout << p->val << " ";
