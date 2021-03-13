@@ -1,8 +1,6 @@
 ﻿#include <iostream>
 using namespace std;
 
-long long N = LONG_MAX;
-
 //сумма цифр числа
 long long sum_num(long long x) {
 	long long sum = 0;
