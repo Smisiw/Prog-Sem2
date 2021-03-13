@@ -46,6 +46,7 @@ struct btree* add(int x, btree* tree) {
         else {//если никуда не вошло
             tree = new btree();
             tree->A[0] = x;
+            tree->n++;
             tree->left = NULL;
             tree->right = NULL;
         }
