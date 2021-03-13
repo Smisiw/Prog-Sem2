@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 using namespace std;
 
 struct btree {
@@ -8,65 +8,65 @@ struct btree {
     struct btree* right;
 };
 
-struct btree* add(int x, btree* tree) {
-    if (tree != NULL) {
-        if (tree->n < 4) {
-            cin >> x;
-            int k = 0;//кол-во элементов, больших введенного числа
-            for (int i = 0; i < tree->n && k < 4; i++) {
-                if (x >= tree->A[i]) {
-                    k++;
-                }
-                else if (k == 3) {
-                    tree->A[3] = x;
-                }
-                else if (k == 2) {
-                    tree->A[3] = tree->A[2];
-                    tree->A[2] = x;
-                }
-                else if (k == 1) {
-                    tree->A[3] = tree->A[2];
-                    tree->A[2] = tree->A[1];
-                    tree->A[1] = x;
-                }
-                else if (k == 0) {
-                    tree->A[3] = tree->A[2];
-                    tree->A[2] = tree->A[1];
-                    tree->A[1] = tree->A[0];
-                    tree->A[0] = x;
-                }
-            }
+void tree_print(btree* tr1) {
+    if (tr1 != NULL) {
+        tree_print(tr1->left);
+        for (int i = 0; i < tr1->n; i++) {
+            cout << tr1->A[i] << " ";
         }
-        else if (tree->left != NULL) {
-            tree->left = add(x, tree->left);
-        }
-        else if (tree->right != NULL) {
-            tree->right = add(x, tree->right);
-        }
-        else {//если никуда не вошло
-            tree = new btree();
-            tree->A[0] = x;
-            tree->n++;
-            tree->left = NULL;
-            tree->right = NULL;
-        }
-    } 
-    return(tree);
+        tree_print(tr1->right);
+    }
 }
 
-void tree_print(btree *tr1) {
-    if (tr1 != NULL) {
-        for (int i = 0; i < tr1->n; i++) {
-            cout << tr1->A[i];
+void add(int b, btree*& tree) {
+    if (tree == NULL) { //если нет узла
+        tree = new btree();
+        tree->A[0] = b;
+        tree->n++;
+    }
+    else if (tree->n < 4) { //если узел не заполнен
+        tree->A[tree->n] = b;
+        tree->n++;
+        for (int i = 0; i < tree->n - 1; i++) //сортировка
+            for (int j = 0; j < tree->n - i - 1; j++)
+                if (tree->A[j] > tree->A[j + 1]) {
+                    int c = tree->A[j]; tree->A[j] = tree->A[j + 1]; tree->A[j + 1] = c;
+                }
+    }
+    else if (tree->n == 4) { //если узел заполнен
+        if (b >= tree->A[3]) add(b, tree->right); //если больше правого элемента узла
+        else if (b <= tree->A[0]) add(b, tree->left); //если меньше левого элемента узла
+        else if (b > tree->A[1]) { //если правее центра узла
+            int c = tree->A[3]; tree->A[3] = b; b = c; //замена
+            for (int i = 0; i < tree->n - 1; i++) //сортировка
+                for (int j = 0; j < tree->n - i - 1; j++)
+                    if (tree->A[j] > tree->A[j + 1]) {
+                        int c = tree->A[j]; tree->A[j] = tree->A[j + 1]; tree->A[j + 1] = c;
+                    }
+            add(b, tree->right);
         }
-        tree_print(tr1->left);
-        tree_print(tr1->right);
+        else if (b <= tree->A[1]) { //если левее центра узла
+            int c = tree->A[0]; tree->A[0] = b; b = c; //замена
+            for (int i = 0; i < tree->n - 1; i++) //сортировка
+                for (int j = 0; j < tree->n - i - 1; j++)
+                    if (tree->A[j] > tree->A[j + 1]) {
+                        int c = tree->A[j]; tree->A[j] = tree->A[j + 1]; tree->A[j + 1] = c;
+                    }
+            add(b, tree->left);
+        }
     }
 }
 
 int main()
 {
-
+    btree* tree = NULL;
+    int n, x;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> x;
+        add(x, tree);
+    }
+    tree_print(tree);
     return 0;
 }
 
