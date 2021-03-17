@@ -1,5 +1,6 @@
 ﻿
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 int addlinedm(int** &p, int k, int l, int d) {
@@ -47,6 +48,7 @@ void addlinem(int* &q) {
 
 int main()
 {
+	srand(time(0));
 	setlocale(0, "ru");
 	const int N = 50;
 	int d = 1, l = 1, k = 0, v = 1, A[N];
@@ -66,6 +68,15 @@ int main()
 		if (A[i] < A[i + 1]) { //считает возрастающую последовательность
 			v = 0;
 			l++;
+			if (i == N - 2) {
+				if (l + 1 > d) d = l + 1;
+				k = addlinedm(p, k, l, d);
+				p[k-1][0] = l;
+				for (int j = 1; j < l + 1; j++)
+				{
+					p[k-1][j] = A[i + 1 - l + j];
+				}
+			}
 		}
 		else if (v==0){ //при конце возрастающей последовательности
 			v = 1;
@@ -78,10 +89,18 @@ int main()
 				p[k-1][j] = A[i - l + j];
 			}
 			l = 1;
+			if (i == N - 2) {
+				addlinem(q);
+				q[q[0]] = A[i + 1];
+			}
 		}
 		else if(v == 1) { //массив невозрастающих последовательностей
 			addlinem(q);
 			q[q[0]] = A[i];
+			if (i == N - 2) {
+				addlinem(q);
+				q[q[0]] = A[i + 1];
+			}
 		}
 	}
 
