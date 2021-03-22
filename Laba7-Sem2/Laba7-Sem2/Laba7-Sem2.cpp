@@ -1,60 +1,84 @@
 ﻿#include <iostream>
+#include <string>
+
 using namespace std;
 
-struct list_int {
+struct list {
+	void* value;
+	list* next, * prev;
+};
+
+/*struct list_int {
 	int value;
 	list_int* next, * prev;
 };
 
 struct list_char {
-	char *name;
+	char* name;
 	list_char* next, * prev;
 };
+*/
 
 //добавление очередного элемента в целочисленный список
-void add_int(list_int* ph) {
-	list_int* p = ph;
-	list_int* q = new list_int;
-	for (; p->next != NULL; p = p->next);
-	cin >> q->value;
-	q->prev = p;
-	p->next = q;
-}
+void add(list*& ph, int v) {
+	list* p = ph;//
+	list* q = new list;
+	q->next = NULL;
 
-//добавление символа в массив 
-void addlinem(char*& q, int n) {
-	char *q1 = NULL;
-	q1 = new char[n];
-	for (int j = 0; j < n-1; j++) q1[j] = q[j];
-	delete[]q;
-	q = new char[n];
-	for (int j = 0; j < n-1; j++) q[j] = q1[j];
-	delete[]q1;
-}
+	if (v == 0) {//инт
+		q->value = new int;
 
-//добавление очередного элемента в символьный список
-void add_char(list_char* ph) {
-	list_char* p = ph;
-	list_char* q = new list_char;
-	for (; p->next != NULL; p = p->next);
-	int n = 0;
-	char c = getchar();
-	while(c != '\n') {
-		n++;
-		addlinem(q->name, n);
-		q->name[n - 1] = c;
-		c = getchar();
+		if (ph == NULL) {
+			cin >> q->value;
+			ph = q;
+			ph->next = NULL;
+		}
+		else {
+			for (; p->next != NULL; p = p->next);
+			cin >> q->value;
+			q->prev = p;
+			p->next = q;
+		}
 	}
-	q->prev = p;
-	p->next = q;
+	else if (v == 1) {//символы
+		q->value = new string;
+		string c;
+		cin >> c;
+
+		if (ph == NULL) {
+
+			ph = q;
+			ph->next = NULL;
+		}
+		else {
+			q->prev = p;
+			p->next = q;
+		}
+
+	}
+	else { cout << "ERROR\n"; }
+
 }
 
+void show(list* p) {
+	for (; p != NULL; p = p->next) {
+		cout << p->value << " ";
+	}
+}
 
+/*void iterator(list* pl, void (*pf)(void*)) {
+
+}*/
 
 int main()
 {
-	list_int *list1 = NULL;
-	list_char* list2 = NULL;
-
+	list* list1 = NULL;
+	//list_char* list2 = NULL;
+	int n, vv;
+	cin >> n >> vv;
+	for (int i = 0; i < n; i++) {
+		add(list1, vv);
+	}
+	show(list1);
 	return 0;
 }

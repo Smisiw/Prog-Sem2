@@ -8,37 +8,13 @@ struct btree {
     struct btree* right;
 };
 
-
-struct queue {
-    btree* tree;
-    int lvl;
-    queue* next;
-};
-
-void tree_print(queue *pb, queue *pe) {
-    if (pb != NULL) {
-        queue* q = pb;
-        cout << q->lvl << ") ";
-        for (int i = 0; i < q->tree->n; i++)
-            cout << q->tree->A[i] << " ";
-        cout << endl;
-        if (q->tree->left != NULL) {
-            pe->next = new queue;
-            pe->next->tree = q->tree->left;
-            pe = pe->next;
-            pe->lvl = q->lvl + 1;
+void tree_print(btree* tr1) {
+    if (tr1 != NULL) {
+        tree_print(tr1->left);
+        for (int i = 0; i < tr1->n; i++) {
+            cout << tr1->A[i] << " ";
         }
-        if (q->tree->right != NULL) {
-            pe->next = new queue;
-            pe->next->tree = q->tree->right;
-            pe->next->next = NULL;
-            pe = pe->next;
-            pe->lvl = q->lvl + 1;
-        }
-        pb = q->next;
-        delete q;
-        tree_print(pb, pe);
-
+        tree_print(tr1->right);
     }
 }
 
@@ -83,22 +59,14 @@ void add(int b, btree*& tree) {
 
 int main()
 {
-
-    queue* pb, * pe;
-    btree *tree=NULL;
-
+    btree* tree = NULL;
     int n, x;
     cin >> n;
     for (int i = 0; i < n; i++) {
         cin >> x;
         add(x, tree);
     }
-    pb = new queue;
-    pe = pb;
-    pb->tree = tree;
-    pb->next = NULL;
-    pb->lvl = 1;
-    tree_print(pb, pe);
+    tree_print(tree);
     return 0;
 }
 
